@@ -3,11 +3,10 @@
 
 #include <QObject>
 
-class Todo : public QObject
+class Todo
 {
-    Q_OBJECT
 public:
-    explicit Todo(QObject *parent = nullptr);
+    Todo();
 
     QString name;
     int weight;
@@ -21,10 +20,7 @@ private:
 
 public:
     void GenerateRandomFactor();
-    double Evaluation();
-signals:
-
-public slots:
+    double Evaluation() const;
 };
 
 #endif // TODO_H

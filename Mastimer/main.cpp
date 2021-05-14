@@ -31,6 +31,7 @@ int main(int argc, char *argv[])
 
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
+    pController->m_pctlTodolist=pctlTodolist;
 
     QTimer *pPomoStatusTimer= new QTimer;
     pPomoStatusTimer->setInterval(100);
@@ -40,6 +41,18 @@ int main(int argc, char *argv[])
     QObject::connect(pctlPomoBegin,SIGNAL(clicked()),pController,SLOT(pomoBegin()));
     QObject::connect(pctlPomoCommit,SIGNAL(clicked()),pController,SLOT(pomoCommit()));
     QObject::connect(pctlPomoDestroy,SIGNAL(clicked()),pController,SLOT(pomoDestroy()));
+
+    QObject::connect(pctlAddTodo,SIGNAL(clicked()),pController,SLOT(todoAdd()));
+    QObject::connect(pctlDeleteTodo,SIGNAL(clicked()),pController,SLOT(todoDelete()));
+
+    QObject::connect(pctlTodolist,SIGNAL(itemSelectionChanged()),pController,SLOT(ui_todolistSelectionChange()));
+
+    QObject::connect(pctlTodoName, SIGNAL(textChanged(const QString&)), pController,SLOT(changeTodoName(const QString&)));
+    QObject::connect(pctlTodoUsed, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoUsed(int)));
+    QObject::connect(pctlTodoTotal, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoTotal(int)));
+    QObject::connect(pctlTodoWeight, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoWeight(int)));
+    QObject::connect(pctlTodoUrgency, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoUrgency(int)));
+    QObject::connect(pctlTodoFocus, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoFocus(int)));
 
     QGridLayout* pGridLayout = new QGridLayout;
 
@@ -62,8 +75,6 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlTodoFocus,4,5);
 
     w.setLayout(pGridLayout);
-
-
 
     w.show();
 

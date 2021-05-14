@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QDateTime>
 #include <QLabel>
+#include <QListWidget>
 
 #include "todo.h"
 
@@ -15,6 +16,7 @@ public:
     explicit Controller(QObject *parent = nullptr);
 
     QLabel* m_pctlPomoStatus;
+    QListWidget* m_pctlTodolist;
 
 private:
     QVector<Todo> m_todolist;
@@ -41,7 +43,17 @@ public slots:
     void pomoBegin();
     void pomoCommit();
     void pomoDestroy();
+    void todoAdd();
+    void todoDelete();
     void ui_pomoStatusRefresh();
+    void ui_todolistRefresh();
+    void ui_todolistSelectionChange();
+    void changeTodoName(const QString&);
+    void changeTodoUsed(int);
+    void changeTodoTotal(int);
+    void changeTodoWeight(int);
+    void changeTodoUrgency(int);
+    void changeTodoFocus(int);
 };
 
 #endif // CONTROLLER_H

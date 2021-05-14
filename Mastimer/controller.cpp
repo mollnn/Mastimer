@@ -1,4 +1,6 @@
 #include "controller.h"
+#include <QtAlgorithms>
+#include <QDebug>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -73,24 +75,36 @@ QString Controller::PomoStatus()
     }
 }
 
+bool cmp_ShuffleTodolist(const Todo& lhs, const Todo& rhs)
+{
+    return lhs.Evaluation() < rhs.Evaluation();
+}
+
 void Controller::ShuffleTodolist()
 {
-
+    for(auto &todo:m_todolist)
+    {
+        todo.GenerateRandomFactor();
+    }
+    std::sort(m_todolist.begin(),m_todolist.end(),cmp_ShuffleTodolist);
+    this->ui_todolistRefresh();
 }
 
 Todo& Controller::GetTodo(int nId)
 {
-
+    return m_todolist[nId];
 }
 
 void Controller::AddTodo()
 {
-
+    m_todolist.append(Todo());
+    this->ui_todolistRefresh();
 }
 
 void Controller::DeleteTodo(int nId)
 {
-
+    m_todolist.erase(m_todolist.begin()+nId);
+    this->ui_todolistRefresh();
 }
 
 void Controller::pomoBegin()
@@ -112,3 +126,64 @@ void Controller::ui_pomoStatusRefresh()
 {
     m_pctlPomoStatus->setText(this->PomoStatus());
 }
+
+void Controller::ui_todolistRefresh()
+{
+    m_pctlTodolist->clear();
+    for(auto &todo:m_todolist)
+    {
+        m_pctlTodolist->addItem(todo.name);
+    }
+}
+
+void Controller::ui_todolistSelectionChange()
+{
+    m_todolistSelectIndex=m_pctlTodolist->currentRow();
+}
+
+void Controller::todoAdd()
+{
+    this->AddTodo();
+}
+
+void Controller::todoDelete()
+{
+    this->DeleteTodo(m_todolistSelectIndex);
+}
+
+void Controller::changeTodoName(const QString& param)
+{
+    m_todolist[m_todolistSelectIndex].name=param;
+    ui_todolistRefresh();
+}
+
+void Controller::changeTodoUsed(int param)
+{
+    m_todolist[m_todolistSelectIndex].used=param;
+    ui_todolistRefresh();
+}
+
+void Controller::changeTodoTotal(int param)
+{
+    m_todolist[m_todolistSelectIndex].total=param;
+    ui_todolistRefresh();
+}
+
+void Controller::changeTodoWeight(int param)
+{
+    m_todolist[m_todolistSelectIndex].weight=param;
+    ui_todolistRefresh();
+}
+
+void Controller::changeTodoUrgency(int param)
+{
+    m_todolist[m_todolistSelectIndex].urgency=param;
+    ui_todolistRefresh();
+}
+
+void Controller::changeTodoFocus(int param)
+{
+    m_todolist[m_todolistSelectIndex].focus=param;
+    ui_todolistRefresh();
+}
+
