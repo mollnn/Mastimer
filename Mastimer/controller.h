@@ -3,7 +3,8 @@
 
 #include <QObject>
 #include <QVector>
-#include <QTime>
+#include <QDateTime>
+#include <QLabel>
 
 #include "todo.h"
 
@@ -13,11 +14,17 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = nullptr);
 
+    QLabel* m_pctlPomoStatus;
 
 private:
     QVector<Todo> m_todolist;
     bool m_pomoFlag;
-    QTime m_pomoStartTime;
+    QDateTime m_pomoStartTime;
+
+
+    int m_todolistSelectIndex;
+
+    const int minimalPomoLength = 10;
 
 public:
     bool PomoBegin();
@@ -31,6 +38,10 @@ public:
 signals:
 
 public slots:
+    void pomoBegin();
+    void pomoCommit();
+    void pomoDestroy();
+    void ui_pomoStatusRefresh();
 };
 
 #endif // CONTROLLER_H

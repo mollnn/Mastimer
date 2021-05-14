@@ -4,8 +4,10 @@
 #include <QPushButton>
 #include <QSpinBox>
 #include <QLineEdit>
-#include <QListView>
+#include <QListWidget>
 #include <QLabel>
+#include <QTimer>
+#include "controller.h"
 
 int main(int argc, char *argv[])
 {
@@ -17,7 +19,7 @@ int main(int argc, char *argv[])
     QPushButton* pctlPomoCommit = new QPushButton;
     QPushButton* pctlPomoDestroy = new QPushButton;
     QPushButton* pctlShuffle = new QPushButton;
-    QListView* pctlTodolist = new QListView;
+    QListWidget* pctlTodolist = new QListWidget;
     QLineEdit* pctlTodoName = new QLineEdit;
     QPushButton* pctlAddTodo = new QPushButton;
     QPushButton* pctlDeleteTodo = new QPushButton;
@@ -26,6 +28,18 @@ int main(int argc, char *argv[])
     QSpinBox* pctlTodoWeight = new QSpinBox;
     QSpinBox* pctlTodoUrgency = new QSpinBox;
     QSpinBox* pctlTodoFocus = new QSpinBox;
+
+    Controller* pController = new Controller;
+    pController->m_pctlPomoStatus=pctlPomoStatus;
+
+    QTimer *pPomoStatusTimer= new QTimer;
+    pPomoStatusTimer->setInterval(100);
+    QObject::connect(pPomoStatusTimer,SIGNAL(timeout()),pController,SLOT(ui_pomoStatusRefresh()));
+    pPomoStatusTimer->start();
+
+    QObject::connect(pctlPomoBegin,SIGNAL(clicked()),pController,SLOT(pomoBegin()));
+    QObject::connect(pctlPomoCommit,SIGNAL(clicked()),pController,SLOT(pomoCommit()));
+    QObject::connect(pctlPomoDestroy,SIGNAL(clicked()),pController,SLOT(pomoDestroy()));
 
     QGridLayout* pGridLayout = new QGridLayout;
 
@@ -48,6 +62,8 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlTodoFocus,4,5);
 
     w.setLayout(pGridLayout);
+
+
 
     w.show();
 

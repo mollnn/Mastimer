@@ -20,7 +20,7 @@ private:
     double randfactor;
 
 public:
-    void generateRandomFactor();
+    void GenerateRandomFactor();
     double Evaluation();
 signals:
 

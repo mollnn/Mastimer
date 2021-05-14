@@ -5,7 +5,7 @@ Todo::Todo(QObject *parent) : QObject(parent)
 
 }
 
-void Todo::generateRandomFactor()
+void Todo::GenerateRandomFactor()
 {
     randfactor=qrand()*1.0/RAND_MAX;
 }
