@@ -26,10 +26,14 @@ CONFIG += c++11
 
 SOURCES += \
         main.cpp \
-        windowwidget.cpp
+        windowwidget.cpp \
+    todo.cpp \
+    controller.cpp
 
 HEADERS += \
-        windowwidget.h
+        windowwidget.h \
+    todo.h \
+    controller.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
