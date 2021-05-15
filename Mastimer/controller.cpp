@@ -132,19 +132,22 @@ void Controller::ui_todolistRefresh()
     m_pctlTodolist->clear();
     for(auto &todo:m_todolist)
     {
-        m_pctlTodolist->addItem(todo.name);
+        m_pctlTodolist->addItem(QString().sprintf("%s (%d/%d) F%d, W%d, U%d",todo.name.toUtf8().data(),todo.used,todo.total,todo.focus,todo.weight,todo.urgency));
     }
 }
 
 void Controller::ui_todolistSelectionChange()
 {
     m_todolistSelectIndex=m_pctlTodolist->currentRow();
-    m_pctlTodoName->setText(m_todolist[m_todolistSelectIndex].name);
-    m_pctlTodoUsed->setValue(m_todolist[m_todolistSelectIndex].used);
-    m_pctlTodoTotal->setValue(m_todolist[m_todolistSelectIndex].total);
-    m_pctlTodoWeight->setValue(m_todolist[m_todolistSelectIndex].weight);
-    m_pctlTodoUrgency->setValue(m_todolist[m_todolistSelectIndex].urgency);
-    m_pctlTodoFocus->setValue(m_todolist[m_todolistSelectIndex].focus);
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        m_pctlTodoName->setText(m_todolist[m_todolistSelectIndex].name);
+        m_pctlTodoUsed->setValue(m_todolist[m_todolistSelectIndex].used);
+        m_pctlTodoTotal->setValue(m_todolist[m_todolistSelectIndex].total);
+        m_pctlTodoWeight->setValue(m_todolist[m_todolistSelectIndex].weight);
+        m_pctlTodoUrgency->setValue(m_todolist[m_todolistSelectIndex].urgency);
+        m_pctlTodoFocus->setValue(m_todolist[m_todolistSelectIndex].focus);
+    }
 }
 
 void Controller::todoAdd()
@@ -159,44 +162,67 @@ void Controller::todoDelete()
 
 void Controller::changeTodoName(const QString& param)
 {
-    qDebug()<<"changeTodoName";
-    if(m_todolist[m_todolistSelectIndex].name==param) return;
-    m_todolist[m_todolistSelectIndex].name=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if(m_todolist[m_todolistSelectIndex].name==param) return;
+        m_todolist[m_todolistSelectIndex].name=param;
+        ui_todolistRefresh();
+    }
+
 }
 
 void Controller::changeTodoUsed(int param)
 {
-    if(m_todolist[m_todolistSelectIndex].used==param) return;
-    m_todolist[m_todolistSelectIndex].used=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if(m_todolist[m_todolistSelectIndex].used==param) return;
+        m_todolist[m_todolistSelectIndex].used=param;
+        ui_todolistRefresh();
+    }
+
 }
 
 void Controller::changeTodoTotal(int param)
 {
-    if(m_todolist[m_todolistSelectIndex].total==param) return;
-    m_todolist[m_todolistSelectIndex].total=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if(m_todolist[m_todolistSelectIndex].total==param) return;
+        m_todolist[m_todolistSelectIndex].total=param;
+        ui_todolistRefresh();
+    }
+
 }
 
 void Controller::changeTodoWeight(int param)
 {
-    if( m_todolist[m_todolistSelectIndex].weight==param) return;
-    m_todolist[m_todolistSelectIndex].weight=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if( m_todolist[m_todolistSelectIndex].weight==param) return;
+        m_todolist[m_todolistSelectIndex].weight=param;
+        ui_todolistRefresh();
+    }
+
 }
 
 void Controller::changeTodoUrgency(int param)
 {
-    if(m_todolist[m_todolistSelectIndex].urgency==param) return;
-    m_todolist[m_todolistSelectIndex].urgency=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if(m_todolist[m_todolistSelectIndex].urgency==param) return;
+        m_todolist[m_todolistSelectIndex].urgency=param;
+        ui_todolistRefresh();
+    }
+
 }
 
 void Controller::changeTodoFocus(int param)
 {
-    if(m_todolist[m_todolistSelectIndex].focus==param) return;
-    m_todolist[m_todolistSelectIndex].focus=param;
-    ui_todolistRefresh();
+    if(m_todolistSelectIndex>=0 && m_todolistSelectIndex<m_todolist.size())
+    {
+        if(m_todolist[m_todolistSelectIndex].focus==param) return;
+        m_todolist[m_todolistSelectIndex].focus=param;
+        ui_todolistRefresh();
+    }
+
 }
 

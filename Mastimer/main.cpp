@@ -77,9 +77,9 @@ int main(int argc, char *argv[])
 
     pGridLayout->addWidget(pctlTodoUsed,4,1);
     pGridLayout->addWidget(pctlTodoTotal,4,2);
-    pGridLayout->addWidget(pctlTodoWeight,4,3);
-    pGridLayout->addWidget(pctlTodoUrgency,4,4);
-    pGridLayout->addWidget(pctlTodoFocus,4,5);
+    pGridLayout->addWidget(pctlTodoFocus,4,3);
+    pGridLayout->addWidget(pctlTodoWeight,4,4);
+    pGridLayout->addWidget(pctlTodoUrgency,4,5);
 
     w.setLayout(pGridLayout);
 

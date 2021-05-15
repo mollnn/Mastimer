@@ -2,7 +2,12 @@
 
 Todo::Todo()
 {
-
+    this->name="New Todo";
+    this->used=0;
+    this->total=1;
+    this->urgency=3;
+    this->weight=3;
+    this->focus=0;
 }
 
 void Todo::GenerateRandomFactor()
