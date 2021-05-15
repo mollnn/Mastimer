@@ -20,9 +20,10 @@ int main(int argc, char *argv[])
     QPushButton* pctlPomoDestroy = new QPushButton;
     QPushButton* pctlShuffle = new QPushButton;
     QListWidget* pctlTodolist = new QListWidget;
-    QLineEdit* pctlTodoName = new QLineEdit;
     QPushButton* pctlAddTodo = new QPushButton;
     QPushButton* pctlDeleteTodo = new QPushButton;
+
+    QLineEdit* pctlTodoName = new QLineEdit;
     QSpinBox* pctlTodoUsed=new QSpinBox;
     QSpinBox* pctlTodoTotal = new QSpinBox;
     QSpinBox* pctlTodoWeight = new QSpinBox;
@@ -32,6 +33,12 @@ int main(int argc, char *argv[])
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
     pController->m_pctlTodolist=pctlTodolist;
+    pController->m_pctlTodoName=pctlTodoName;
+    pController->m_pctlTodoUsed=pctlTodoUsed;
+    pController->m_pctlTodoTotal=pctlTodoTotal;
+    pController->m_pctlTodoWeight=pctlTodoWeight;
+    pController->m_pctlTodoFocus=pctlTodoFocus;
+    pController->m_pctlTodoUrgency=pctlTodoUrgency;
 
     QTimer *pPomoStatusTimer= new QTimer;
     pPomoStatusTimer->setInterval(100);

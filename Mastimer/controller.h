@@ -6,6 +6,8 @@
 #include <QDateTime>
 #include <QLabel>
 #include <QListWidget>
+#include <QLineEdit>
+#include <QSpinBox>
 
 #include "todo.h"
 
@@ -17,6 +19,12 @@ public:
 
     QLabel* m_pctlPomoStatus;
     QListWidget* m_pctlTodolist;
+    QLineEdit* m_pctlTodoName;
+    QSpinBox* m_pctlTodoUsed;
+    QSpinBox* m_pctlTodoTotal;
+    QSpinBox* m_pctlTodoWeight;
+    QSpinBox* m_pctlTodoUrgency;
+    QSpinBox* m_pctlTodoFocus;
 
 private:
     QVector<Todo> m_todolist;
