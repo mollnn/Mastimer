@@ -87,6 +87,10 @@ void Controller::ShuffleTodolist()
         todo.GenerateRandomFactor();
     }
     std::sort(m_todolist.begin(),m_todolist.end(),cmp_ShuffleTodolist);
+    if(m_todolist.size()>0)
+    {
+        m_pctlTodolist->setCurrentRow(0);
+    }
     this->ui_todolistRefresh();
 }
 
@@ -129,10 +133,15 @@ void Controller::ui_pomoStatusRefresh()
 
 void Controller::ui_todolistRefresh()
 {
+    int t_selectRow = m_pctlTodolist->currentRow();
     m_pctlTodolist->clear();
     for(auto &todo:m_todolist)
     {
         m_pctlTodolist->addItem(QString().sprintf("%s (%d/%d) F%d, W%d, U%d",todo.name.toUtf8().data(),todo.used,todo.total,todo.focus,todo.weight,todo.urgency));
+    }
+    if(t_selectRow>=0)
+    {
+        m_pctlTodolist->setCurrentRow(t_selectRow);
     }
 }
 
