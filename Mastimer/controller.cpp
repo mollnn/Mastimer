@@ -77,7 +77,7 @@ QString Controller::PomoStatus()
 
 bool cmp_ShuffleTodolist(const Todo& lhs, const Todo& rhs)
 {
-    return lhs.Evaluation() < rhs.Evaluation();
+    return lhs.Evaluation() > rhs.Evaluation();
 }
 
 void Controller::ShuffleTodolist()
@@ -158,6 +158,11 @@ void Controller::todoAdd()
 void Controller::todoDelete()
 {
     this->DeleteTodo(m_todolistSelectIndex);
+}
+
+void Controller::todoShuffle()
+{
+    this->ShuffleTodolist();
 }
 
 void Controller::changeTodoName(const QString& param)

@@ -53,6 +53,7 @@ public slots:
     void pomoDestroy();
     void todoAdd();
     void todoDelete();
+    void todoShuffle();
     void ui_pomoStatusRefresh();
     void ui_todolistRefresh();
     void ui_todolistSelectionChange();

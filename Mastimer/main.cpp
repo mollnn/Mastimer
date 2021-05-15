@@ -61,6 +61,7 @@ int main(int argc, char *argv[])
 
     QObject::connect(pctlAddTodo,SIGNAL(clicked()),pController,SLOT(todoAdd()));
     QObject::connect(pctlDeleteTodo,SIGNAL(clicked()),pController,SLOT(todoDelete()));
+    QObject::connect(pctlShuffle,SIGNAL(clicked()),pController,SLOT(todoShuffle()));
 
     QObject::connect(pctlTodolist,SIGNAL(itemSelectionChanged()),pController,SLOT(ui_todolistSelectionChange()));
 
