@@ -45,6 +45,8 @@ public:
     Todo& GetTodo(int nId);
     void AddTodo();
     void DeleteTodo(int nId);
+    void SaveTodolist();
+    void LoadTodolist();
 signals:
 
 public slots:
@@ -54,6 +56,8 @@ public slots:
     void todoAdd();
     void todoDelete();
     void todoShuffle();
+    void todolistSave();
+    void todolistLoad();
     void ui_pomoStatusRefresh();
     void ui_todolistRefresh();
     void ui_todolistSelectionChange();

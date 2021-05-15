@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
     QLabel* pctlLabelTodolist = new QLabel("任务列表");
     QLabel* pctlLabelTodoEdit = new QLabel("任务信息编辑");
 
+    QPushButton* pctlTodolistLoad = new QPushButton("列表载入");
+    QPushButton* pctlTodolistSave = new QPushButton("列表保存");
+
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
     pController->m_pctlTodolist=pctlTodolist;
@@ -63,6 +66,9 @@ int main(int argc, char *argv[])
     QObject::connect(pctlDeleteTodo,SIGNAL(clicked()),pController,SLOT(todoDelete()));
     QObject::connect(pctlShuffle,SIGNAL(clicked()),pController,SLOT(todoShuffle()));
 
+    QObject::connect(pctlTodolistSave,SIGNAL(clicked()),pController,SLOT(todolistSave()));
+    QObject::connect(pctlTodolistLoad,SIGNAL(clicked()),pController,SLOT(todolistLoad()));
+
     QObject::connect(pctlTodolist,SIGNAL(itemSelectionChanged()),pController,SLOT(ui_todolistSelectionChange()));
 
     QObject::connect(pctlTodoName, SIGNAL(textChanged(const QString&)), pController,SLOT(changeTodoName(const QString&)));
@@ -80,7 +86,10 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlPomoDestroy,1,4);
     pGridLayout->addWidget(pctlShuffle,1,5);
 
-    pGridLayout->addWidget(pctlLabelTodolist,10,1,1,5);
+    pGridLayout->addWidget(pctlLabelTodolist,10,1,1,3);
+    pGridLayout->addWidget(pctlTodolistSave,10,4,1,1);
+    pGridLayout->addWidget(pctlTodolistLoad,10,5,1,1);
+
     pGridLayout->addWidget(pctlTodolist,11,1,1,5);
 
     pGridLayout->addWidget(pctlLabelTodoEdit,30,1,1,5);

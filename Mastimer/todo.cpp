@@ -19,3 +19,4 @@ double Todo::Evaluation() const
 {
     return (weight+urgency+focus)*randfactor;
 }
+

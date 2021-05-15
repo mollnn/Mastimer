@@ -1,6 +1,9 @@
 #include "controller.h"
 #include <QtAlgorithms>
 #include <QDebug>
+#include <QFile>
+#include <QDataStream>
+#include <QFileDialog>
 
 Controller::Controller(QObject *parent) : QObject(parent)
 {
@@ -112,6 +115,35 @@ void Controller::DeleteTodo(int nId)
     this->ui_todolistRefresh();
 }
 
+void Controller::SaveTodolist()
+{
+    QString filename=QFileDialog::getSaveFileName(nullptr,"Save","","Mastimer Todolist File (*.todolist)");
+    QFile file(filename);
+    if(file.open(QIODevice::WriteOnly)==false)
+    {
+        qDebug()<<"Fail to save file";
+        return;
+    }
+    QDataStream dataStream(&file);
+    dataStream<<m_todolist;
+    file.close();
+}
+
+void Controller::LoadTodolist()
+{
+    QString filename=QFileDialog::getOpenFileName(nullptr,"Open","","Mastimer Todolist File (*.todolist)");
+    QFile file(filename);
+    if(file.open(QIODevice::ReadOnly)==false)
+    {
+        qDebug()<<"Fail to open file";
+        return;
+    }
+    QDataStream dataStream(&file);
+    dataStream>>m_todolist;
+    file.close();
+    this->ui_todolistRefresh();
+}
+
 void Controller::pomoBegin()
 {
     this->PomoBegin();
@@ -183,7 +215,6 @@ void Controller::changeTodoName(const QString& param)
         m_todolist[m_todolistSelectIndex].name=param;
         ui_todolistRefresh();
     }
-
 }
 
 void Controller::changeTodoUsed(int param)
@@ -238,6 +269,14 @@ void Controller::changeTodoFocus(int param)
         m_todolist[m_todolistSelectIndex].focus=param;
         ui_todolistRefresh();
     }
-
 }
 
+
+void Controller::todolistSave()
+{
+    this->SaveTodolist();
+}
+void Controller::todolistLoad()
+{
+    this->LoadTodolist();
+}
