@@ -68,10 +68,10 @@ QString Controller::PomoStatus()
     {
         qint64 t_pomoRunTime = m_pomoStartTime.secsTo(QDateTime::currentDateTime());
         qint64 t_pomoTotalTime = minimalPomoLength;
-        return QString().sprintf("%lld/%lld",t_pomoRunTime,t_pomoTotalTime);
+        return QString().sprintf("运行 %lld/%lld",t_pomoRunTime,t_pomoTotalTime);
     }
     else {
-        return QString("ready");
+        return QString("空闲");
     }
 }
 

@@ -15,13 +15,14 @@ int main(int argc, char *argv[])
     WindowWidget w;
 
     QLabel* pctlPomoStatus = new QLabel;
-    QPushButton* pctlPomoBegin = new QPushButton;
-    QPushButton* pctlPomoCommit = new QPushButton;
-    QPushButton* pctlPomoDestroy = new QPushButton;
-    QPushButton* pctlShuffle = new QPushButton;
+    QPushButton* pctlPomoBegin = new QPushButton("开始番茄");
+    QPushButton* pctlPomoCommit = new QPushButton("提交番茄");
+    QPushButton* pctlPomoDestroy = new QPushButton("删除番茄");
+    QPushButton* pctlShuffle = new QPushButton("重排序");
+
     QListWidget* pctlTodolist = new QListWidget;
-    QPushButton* pctlAddTodo = new QPushButton;
-    QPushButton* pctlDeleteTodo = new QPushButton;
+    QPushButton* pctlAddTodo = new QPushButton("新增任务");
+    QPushButton* pctlDeleteTodo = new QPushButton("删除任务");
 
     QLineEdit* pctlTodoName = new QLineEdit;
     QSpinBox* pctlTodoUsed=new QSpinBox;
@@ -29,6 +30,15 @@ int main(int argc, char *argv[])
     QSpinBox* pctlTodoWeight = new QSpinBox;
     QSpinBox* pctlTodoUrgency = new QSpinBox;
     QSpinBox* pctlTodoFocus = new QSpinBox;
+
+    QLabel* pctlLabelTodoName = new QLabel("任务名称");
+    QLabel* pctlLabelTodoUsed = new QLabel("已用番茄数");
+    QLabel* pctlLabelTodoTotal = new QLabel("预计番茄数");
+    QLabel* pctlLabelTodoWeight = new QLabel("重要度");
+    QLabel* pctlLabelTodoUrgency = new QLabel("紧迫度");
+    QLabel* pctlLabelTodoFocus = new QLabel("专注指数");
+    QLabel* pctlLabelTodolist = new QLabel("任务列表");
+    QLabel* pctlLabelTodoEdit = new QLabel("任务信息编辑");
 
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
@@ -69,17 +79,27 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlPomoDestroy,1,4);
     pGridLayout->addWidget(pctlShuffle,1,5);
 
-    pGridLayout->addWidget(pctlTodolist,2,1,1,5);
+    pGridLayout->addWidget(pctlLabelTodolist,10,1,1,5);
+    pGridLayout->addWidget(pctlTodolist,11,1,1,5);
 
-    pGridLayout->addWidget(pctlTodoName,3,1,1,3);
-    pGridLayout->addWidget(pctlAddTodo,3,4);
-    pGridLayout->addWidget(pctlDeleteTodo,3,5);
+    pGridLayout->addWidget(pctlLabelTodoEdit,30,1,1,5);
+    pGridLayout->addWidget(pctlLabelTodoName,31,1,1,1);
 
-    pGridLayout->addWidget(pctlTodoUsed,4,1);
-    pGridLayout->addWidget(pctlTodoTotal,4,2);
-    pGridLayout->addWidget(pctlTodoFocus,4,3);
-    pGridLayout->addWidget(pctlTodoWeight,4,4);
-    pGridLayout->addWidget(pctlTodoUrgency,4,5);
+    pGridLayout->addWidget(pctlTodoName,31,2,1,2);
+    pGridLayout->addWidget(pctlAddTodo,31,4);
+    pGridLayout->addWidget(pctlDeleteTodo,31,5);
+
+    pGridLayout->addWidget(pctlLabelTodoUsed,40,1);
+    pGridLayout->addWidget(pctlLabelTodoTotal,40,2);
+    pGridLayout->addWidget(pctlLabelTodoFocus,40,3);
+    pGridLayout->addWidget(pctlLabelTodoWeight,40,4);
+    pGridLayout->addWidget(pctlLabelTodoUrgency,40,5);
+
+    pGridLayout->addWidget(pctlTodoUsed,41,1);
+    pGridLayout->addWidget(pctlTodoTotal,41,2);
+    pGridLayout->addWidget(pctlTodoFocus,41,3);
+    pGridLayout->addWidget(pctlTodoWeight,41,4);
+    pGridLayout->addWidget(pctlTodoUrgency,41,5);
 
     w.setLayout(pGridLayout);
 
