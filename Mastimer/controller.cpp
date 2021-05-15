@@ -29,11 +29,12 @@ bool Controller::PomoCommit(int nId)
     {
         if(m_pomoStartTime.secsTo(QDateTime::currentDateTime())>=minimalPomoLength)
         {
-            if(nId>=0 && nId<=m_todolist.size())
+            if(nId>=0 && nId<m_todolist.size())
             {
-                // todo: modify the status of the todo
-                // todo: show the success
+                m_todolist[nId].used++;
+                m_pctlPomoStatus->setText("committed");
                 m_pomoFlag=0;
+                this->ui_pomoStatusRefresh();
                 return true;
             }
             else {

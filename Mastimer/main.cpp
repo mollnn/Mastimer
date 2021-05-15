@@ -51,7 +51,7 @@ int main(int argc, char *argv[])
     pController->m_pctlTodoUrgency=pctlTodoUrgency;
 
     QTimer *pPomoStatusTimer= new QTimer;
-    pPomoStatusTimer->setInterval(100);
+    pPomoStatusTimer->setInterval(500);
     QObject::connect(pPomoStatusTimer,SIGNAL(timeout()),pController,SLOT(ui_pomoStatusRefresh()));
     pPomoStatusTimer->start();
 
