@@ -7,7 +7,18 @@
 #include <QListWidget>
 #include <QLabel>
 #include <QTimer>
+#include <QTextStream>
+#include <QFile>
 #include "controller.h"
+
+void UseQSS(QWidget* widget, const QString& filename)
+{
+    QFile file(filename);
+    file.open(QFile::ReadOnly);
+    QTextStream filetext(&file);
+    QString stylesheet = filetext.readAll();
+    widget->setStyleSheet(stylesheet);
+}
 
 int main(int argc, char *argv[])
 {
@@ -117,6 +128,13 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlTodoUrgency,41,5);
 
     w.setLayout(pGridLayout);
+
+    UseQSS(&w,"./main.qss");
+
+    QFont font;
+       font.setPointSize(10);
+       font.setFamily("微软雅黑");
+       a.setFont(font);
 
     w.show();
 
