@@ -43,6 +43,7 @@ bool Controller::PomoCommit(int nId)
                 m_pctlPomoStatus->setText("committed");
                 m_pomoFlag=0;
                 this->ui_pomoStatusRefresh();
+                this->ui_todolistRefresh();
                 return true;
             }
             else {

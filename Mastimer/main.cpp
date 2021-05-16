@@ -139,12 +139,9 @@ int main(int argc, char *argv[])
     UseQSS(&w,"./main.qss");
 
     QFont font;
-       font.setPointSize(10);
-       font.setFamily("微软雅黑");
-       a.setFont(font);
-
-           w.setPalette(QPalette("#f2e7e5"));
-           w.setAutoFillBackground(true);
+    font.setPointSize(10);
+    font.setFamily("微软雅黑");
+    a.setFont(font);
 
     w.show();
 
