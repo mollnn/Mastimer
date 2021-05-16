@@ -333,12 +333,40 @@ void Controller::autoSave()
     QDateTime curDateTime = QDateTime::currentDateTime();
     QString filename="./autosave/autosave_"+curDateTime.toString("yyyy-MM-dd-hh-mm-ss")+".todolist";
     QFile file(filename);
-    if(file.open(QIODevice::WriteOnly)==false)
+
+    if(curDateTime.time().second()==0)
+    {
+        if(file.open(QIODevice::WriteOnly)==false)
+        {
+            qDebug()<<"Fail to autobackup file";
+            return;
+        }
+        QDataStream dataStream(&file);
+        dataStream<<m_todolist;
+        file.close();
+    }
+
+    QFile file2("default.todolist");
+    if(file2.open(QIODevice::WriteOnly)==false)
     {
         qDebug()<<"Fail to autosave file";
         return;
     }
-    QDataStream dataStream(&file);
+    QDataStream dataStream(&file2);
     dataStream<<m_todolist;
-    file.close();
+    file2.close();
+}
+
+void Controller::autoLoad()
+{
+    QFile file2("default.todolist");
+    if(file2.open(QIODevice::ReadOnly)==false)
+    {
+        qDebug()<<"Fail to autoload file";
+        return;
+    }
+    QDataStream dataStream(&file2);
+    dataStream>>m_todolist;
+    file2.close();
+    ui_todolistRefresh();
 }

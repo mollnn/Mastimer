@@ -73,12 +73,12 @@ int main(int argc, char *argv[])
     pController->m_pctlPomoLength=pctlPomoLength;
 
     QTimer *pPomoStatusTimer= new QTimer;
-    pPomoStatusTimer->setInterval(500);
+    pPomoStatusTimer->setInterval(200);
     QObject::connect(pPomoStatusTimer,SIGNAL(timeout()),pController,SLOT(ui_pomoStatusRefresh()));
     pPomoStatusTimer->start();
 
     QTimer *pAutosaveTimer = new QTimer;
-    pAutosaveTimer->setInterval(60000);
+    pAutosaveTimer->setInterval(1000);
     QObject::connect(pAutosaveTimer,SIGNAL(timeout()),pController,SLOT(autoSave()));
     pAutosaveTimer->start();
 
@@ -156,6 +156,8 @@ int main(int argc, char *argv[])
     font.setPointSize(10);
     font.setFamily("微软雅黑");
     a.setFont(font);
+
+    pController->autoLoad();
 
     w.show();
 

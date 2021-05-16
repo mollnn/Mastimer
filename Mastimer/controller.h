@@ -77,6 +77,7 @@ public slots:
     void changeTodoFocus(int);
     void changePomoLength(int);
     void autoSave();
+    void autoLoad();
 };
 
 #endif // CONTROLLER_H
