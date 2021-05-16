@@ -67,6 +67,7 @@ public slots:
     void changeTodoWeight(int);
     void changeTodoUrgency(int);
     void changeTodoFocus(int);
+    void autoSave();
 };
 
 #endif // CONTROLLER_H

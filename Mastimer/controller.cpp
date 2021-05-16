@@ -258,7 +258,6 @@ void Controller::changeTodoUrgency(int param)
         m_todolist[m_todolistSelectIndex].urgency=param;
         ui_todolistRefresh();
     }
-
 }
 
 void Controller::changeTodoFocus(int param)
@@ -276,7 +275,23 @@ void Controller::todolistSave()
 {
     this->SaveTodolist();
 }
+
 void Controller::todolistLoad()
 {
     this->LoadTodolist();
+}
+
+void Controller::autoSave()
+{
+    QDateTime curDateTime = QDateTime::currentDateTime();
+    QString filename="./autosave/autosave_"+curDateTime.toString("yyyy-MM-dd-hh-mm-ss")+".todolist";
+    QFile file(filename);
+    if(file.open(QIODevice::WriteOnly)==false)
+    {
+        qDebug()<<"Fail to autosave file";
+        return;
+    }
+    QDataStream dataStream(&file);
+    dataStream<<m_todolist;
+    file.close();
 }

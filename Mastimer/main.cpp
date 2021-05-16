@@ -58,6 +58,11 @@ int main(int argc, char *argv[])
     QObject::connect(pPomoStatusTimer,SIGNAL(timeout()),pController,SLOT(ui_pomoStatusRefresh()));
     pPomoStatusTimer->start();
 
+    QTimer *pAutosaveTimer = new QTimer;
+    pAutosaveTimer->setInterval(60000);
+    QObject::connect(pAutosaveTimer,SIGNAL(timeout()),pController,SLOT(autoSave()));
+    pAutosaveTimer->start();
+
     QObject::connect(pctlPomoBegin,SIGNAL(clicked()),pController,SLOT(pomoBegin()));
     QObject::connect(pctlPomoCommit,SIGNAL(clicked()),pController,SLOT(pomoCommit()));
     QObject::connect(pctlPomoDestroy,SIGNAL(clicked()),pController,SLOT(pomoDestroy()));
