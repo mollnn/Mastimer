@@ -63,6 +63,7 @@ int main(int argc, char *argv[])
     pController->m_pctlTodoWeight=pctlTodoWeight;
     pController->m_pctlTodoFocus=pctlTodoFocus;
     pController->m_pctlTodoUrgency=pctlTodoUrgency;
+    pController->m_pctlWindow=&w;
 
     QTimer *pPomoStatusTimer= new QTimer;
     pPomoStatusTimer->setInterval(500);
@@ -73,6 +74,12 @@ int main(int argc, char *argv[])
     pAutosaveTimer->setInterval(60000);
     QObject::connect(pAutosaveTimer,SIGNAL(timeout()),pController,SLOT(autoSave()));
     pAutosaveTimer->start();
+
+
+    QTimer *pBackgroundColorUpdateTimer= new QTimer;
+    pBackgroundColorUpdateTimer->setInterval(50);
+    QObject::connect(pBackgroundColorUpdateTimer,SIGNAL(timeout()),pController,SLOT(ui_updateBackgroundColor()));
+    pBackgroundColorUpdateTimer->start();
 
     QObject::connect(pctlPomoBegin,SIGNAL(clicked()),pController,SLOT(pomoBegin()));
     QObject::connect(pctlPomoCommit,SIGNAL(clicked()),pController,SLOT(pomoCommit()));
@@ -135,6 +142,9 @@ int main(int argc, char *argv[])
        font.setPointSize(10);
        font.setFamily("微软雅黑");
        a.setFont(font);
+
+           w.setPalette(QPalette("#f2e7e5"));
+           w.setAutoFillBackground(true);
 
     w.show();
 

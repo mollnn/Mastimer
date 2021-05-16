@@ -25,6 +25,7 @@ public:
     QSpinBox* m_pctlTodoWeight;
     QSpinBox* m_pctlTodoUrgency;
     QSpinBox* m_pctlTodoFocus;
+    QWidget* m_pctlWindow;
 
 private:
     QVector<Todo> m_todolist;
@@ -35,6 +36,10 @@ private:
     int m_todolistSelectIndex;
 
     const int minimalPomoLength = 10;
+
+    const QColor colorReady=QColor("#f2e7e5");
+    const QColor colorWorking=QColor("#f2cac9");
+    const QColor colorFinish=QColor("#ed3b2f");
 
 public:
     bool PomoBegin();
@@ -61,6 +66,7 @@ public slots:
     void ui_pomoStatusRefresh();
     void ui_todolistRefresh();
     void ui_todolistSelectionChange();
+    void ui_updateBackgroundColor();
     void changeTodoName(const QString&);
     void changeTodoUsed(int);
     void changeTodoTotal(int);

@@ -5,6 +5,11 @@
 #include <QDataStream>
 #include <QFileDialog>
 
+QColor BlendColor(const QColor &a, const QColor &b, double k)
+{
+    return QColor(a.red()*k+b.red()*(1-k),a.green()*k+b.green()*(1-k),a.blue()*k+b.blue()*(1-k));
+}
+
 Controller::Controller(QObject *parent) : QObject(parent)
 {
     m_pomoFlag=false;
@@ -190,6 +195,23 @@ void Controller::ui_todolistSelectionChange()
         m_pctlTodoUrgency->setValue(m_todolist[m_todolistSelectIndex].urgency);
         m_pctlTodoFocus->setValue(m_todolist[m_todolistSelectIndex].focus);
     }
+}
+
+
+void Controller::ui_updateBackgroundColor()
+{
+    QColor newColor = colorReady;
+    if(m_pomoFlag==1)
+    {
+        newColor=colorWorking;
+        if(m_pomoStartTime.secsTo(QDateTime::currentDateTime())>=minimalPomoLength)
+        {
+            newColor=colorFinish;
+        }
+    }
+    QPalette oldPalette = m_pctlWindow->palette();
+    oldPalette.setColor(QPalette::Background, BlendColor(m_pctlWindow->palette().background().color(),newColor,0.9));
+    m_pctlWindow->setPalette(oldPalette);
 }
 
 void Controller::todoAdd()
