@@ -309,6 +309,14 @@ void Controller::changeTodoFocus(int param)
     }
 }
 
+void Controller::changePomoLength(int param)
+{
+    minimalPomoLength=param;
+    if(minimalPomoLength!=m_pctlPomoLength->value())
+    {
+        m_pctlPomoLength->setValue(minimalPomoLength);
+    }
+}
 
 void Controller::todolistSave()
 {

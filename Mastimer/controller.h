@@ -25,6 +25,7 @@ public:
     QSpinBox* m_pctlTodoWeight;
     QSpinBox* m_pctlTodoUrgency;
     QSpinBox* m_pctlTodoFocus;
+    QSpinBox* m_pctlPomoLength;
     QWidget* m_pctlWindow;
 
 private:
@@ -35,7 +36,7 @@ private:
 
     int m_todolistSelectIndex;
 
-    const int minimalPomoLength = 10;
+    int minimalPomoLength = 10;
 
     const QColor colorReady=QColor("#f2e7e5");
     const QColor colorWorking=QColor("#f2cac9");
@@ -74,6 +75,7 @@ public slots:
     void changeTodoWeight(int);
     void changeTodoUrgency(int);
     void changeTodoFocus(int);
+    void changePomoLength(int);
     void autoSave();
 };
 

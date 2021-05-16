@@ -54,6 +54,12 @@ int main(int argc, char *argv[])
     QPushButton* pctlTodolistLoad = new QPushButton("列表载入");
     QPushButton* pctlTodolistSave = new QPushButton("列表保存");
 
+    QLabel* pctlLabelPomoLength = new QLabel("番茄长度");
+    QSpinBox* pctlPomoLength = new QSpinBox;
+    pctlPomoLength->setMaximum(3600);
+    pctlPomoLength->setMinimum(1);
+    pctlPomoLength->setValue(500);
+
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
     pController->m_pctlTodolist=pctlTodolist;
@@ -64,6 +70,7 @@ int main(int argc, char *argv[])
     pController->m_pctlTodoFocus=pctlTodoFocus;
     pController->m_pctlTodoUrgency=pctlTodoUrgency;
     pController->m_pctlWindow=&w;
+    pController->m_pctlPomoLength=pctlPomoLength;
 
     QTimer *pPomoStatusTimer= new QTimer;
     pPomoStatusTimer->setInterval(500);
@@ -101,17 +108,22 @@ int main(int argc, char *argv[])
     QObject::connect(pctlTodoUrgency, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoUrgency(int)));
     QObject::connect(pctlTodoFocus, SIGNAL(valueChanged(int)), pController,SLOT(changeTodoFocus(int)));
 
+    QObject::connect(pctlPomoLength,SIGNAL(valueChanged(int)),pController,SLOT(changePomoLength(int)));
+
     QGridLayout* pGridLayout = new QGridLayout;
 
     pGridLayout->addWidget(pctlPomoStatus,1,1);
     pGridLayout->addWidget(pctlPomoBegin,1,2);
     pGridLayout->addWidget(pctlPomoCommit,1,3);
     pGridLayout->addWidget(pctlPomoDestroy,1,4);
-    pGridLayout->addWidget(pctlShuffle,1,5);
+    pGridLayout->addWidget(pctlShuffle,10,4);
 
-    pGridLayout->addWidget(pctlLabelTodolist,10,1,1,3);
-    pGridLayout->addWidget(pctlTodolistSave,10,4,1,1);
-    pGridLayout->addWidget(pctlTodolistLoad,10,5,1,1);
+    pGridLayout->addWidget(pctlLabelTodolist,10,1,1,1);
+    pGridLayout->addWidget(pctlTodolistSave,10,2,1,1);
+    pGridLayout->addWidget(pctlTodolistLoad,10,3,1,1);
+
+    pGridLayout->addWidget(pctlLabelPomoLength,1,5,1,1);
+    pGridLayout->addWidget(pctlPomoLength,10,5,1,1);
 
     pGridLayout->addWidget(pctlTodolist,11,1,1,5);
 
@@ -133,6 +145,8 @@ int main(int argc, char *argv[])
     pGridLayout->addWidget(pctlTodoFocus,41,3);
     pGridLayout->addWidget(pctlTodoWeight,41,4);
     pGridLayout->addWidget(pctlTodoUrgency,41,5);
+
+
 
     w.setLayout(pGridLayout);
 
