@@ -24,15 +24,15 @@ public:
     void GenerateRandomFactor();
     double Evaluation() const;
 
-    friend QDataStream &operator<<(QDataStream &output , const Todo &data)
+    friend QDataStream &operator<<(QDataStream &output, const Todo &data)
     {
-        output<<data.name<<data.used<<data.total<<data.urgency<<data.weight<<data.focus;
+        output << data.name << data.used << data.total << data.urgency << data.weight << data.focus;
         return output;
     }
 
-    friend QDataStream &operator>>(QDataStream &input , Todo &data)
+    friend QDataStream &operator>>(QDataStream &input, Todo &data)
     {
-        input>>data.name>>data.used>>data.total>>data.urgency>>data.weight>>data.focus;
+        input >> data.name >> data.used >> data.total >> data.urgency >> data.weight >> data.focus;
         return input;
     }
 };

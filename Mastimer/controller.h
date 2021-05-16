@@ -18,16 +18,16 @@ class Controller : public QObject
 public:
     explicit Controller(QObject *parent = nullptr);
 
-    QLabel* m_pctlPomoStatus;
-    QListWidget* m_pctlTodolist;
-    QLineEdit* m_pctlTodoName;
-    QSpinBox* m_pctlTodoUsed;
-    QSpinBox* m_pctlTodoTotal;
-    QSpinBox* m_pctlTodoWeight;
-    QSpinBox* m_pctlTodoUrgency;
-    QSpinBox* m_pctlTodoFocus;
-    QSpinBox* m_pctlPomoLength;
-    QWidget* m_pctlWindow;
+    QLabel *m_pctlPomoStatus;
+    QListWidget *m_pctlTodolist;
+    QLineEdit *m_pctlTodoName;
+    QSpinBox *m_pctlTodoUsed;
+    QSpinBox *m_pctlTodoTotal;
+    QSpinBox *m_pctlTodoWeight;
+    QSpinBox *m_pctlTodoUrgency;
+    QSpinBox *m_pctlTodoFocus;
+    QSpinBox *m_pctlPomoLength;
+    QWidget *m_pctlWindow;
 
 private:
     QVector<Todo> m_todolist;
@@ -35,16 +35,15 @@ private:
     int m_relaxFlag;
     QDateTime m_pomoStartTime;
 
-
     int m_todolistSelectIndex;
 
-    int minimalPomoLength = 10;
-    int minimalRelaxLength = 5;
+    int minimalPomoLength = 500;
+    int minimalRelaxLength = 50;
 
-    const QColor colorReady=QColor("#f2e7e5");
-    const QColor colorWorking=QColor("#f2cac9");
-    const QColor colorFinish=QColor("#ed3b2f");
-    const QColor colorRelax=QColor("#96c24e");
+    const QColor colorReady = QColor("#f2e7e5");
+    const QColor colorWorking = QColor("#f2cac9");
+    const QColor colorFinish = QColor("#ed3b2f");
+    const QColor colorRelax = QColor("#add5a2");
 
     QTimer timerRelax;
 
@@ -54,12 +53,12 @@ public:
     bool PomoDestroy();
     QString PomoStatus();
     void ShuffleTodolist();
-    Todo& GetTodo(int nId);
+    Todo &GetTodo(int nId);
     void AddTodo();
     void DeleteTodo(int nId);
     void SaveTodolist();
     void LoadTodolist();
-    void WriteLog(const QString& strLog);
+    void WriteLog(const QString &strLog);
 signals:
 
 public slots:
@@ -75,7 +74,7 @@ public slots:
     void ui_todolistRefresh();
     void ui_todolistSelectionChange();
     void ui_updateBackgroundColor();
-    void changeTodoName(const QString&);
+    void changeTodoName(const QString &);
     void changeTodoUsed(int);
     void changeTodoTotal(int);
     void changeTodoWeight(int);

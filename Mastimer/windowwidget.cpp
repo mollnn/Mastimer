@@ -7,5 +7,4 @@ WindowWidget::WindowWidget(QWidget *parent)
 
 WindowWidget::~WindowWidget()
 {
-
 }
