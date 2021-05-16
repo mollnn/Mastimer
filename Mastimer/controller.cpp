@@ -4,6 +4,7 @@
 #include <QFile>
 #include <QDataStream>
 #include <QFileDialog>
+#include <QTextStream>
 
 QColor BlendColor(const QColor &a, const QColor &b, double k)
 {
@@ -44,6 +45,7 @@ bool Controller::PomoCommit(int nId)
                 m_pomoFlag=0;
                 this->ui_pomoStatusRefresh();
                 this->ui_todolistRefresh();
+                this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + "," + QString().sprintf("%d",m_todolist[nId].used));
                 return true;
             }
             else {
@@ -148,6 +150,20 @@ void Controller::LoadTodolist()
     dataStream>>m_todolist;
     file.close();
     this->ui_todolistRefresh();
+}
+
+void Controller::WriteLog(const QString& strLog)
+{
+    QString filename="log.csv";
+    QFile file(filename);
+    if(file.open(QIODevice::ReadWrite|QIODevice::Append)==false)
+    {
+        qDebug()<<"Fail to write log";
+        return;
+    }
+    QTextStream textStream(&file);
+    textStream<<strLog;
+    file.close();
 }
 
 void Controller::pomoBegin()

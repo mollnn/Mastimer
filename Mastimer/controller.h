@@ -52,6 +52,7 @@ public:
     void DeleteTodo(int nId);
     void SaveTodolist();
     void LoadTodolist();
+    void WriteLog(const QString& strLog);
 signals:
 
 public slots:
