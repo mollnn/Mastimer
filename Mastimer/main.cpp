@@ -56,9 +56,6 @@ int main(int argc, char *argv[])
 
     QLabel* pctlLabelPomoLength = new QLabel("番茄长度");
     QSpinBox* pctlPomoLength = new QSpinBox;
-    pctlPomoLength->setMaximum(3600);
-    pctlPomoLength->setMinimum(1);
-    pctlPomoLength->setValue(500);
 
     Controller* pController = new Controller;
     pController->m_pctlPomoStatus=pctlPomoStatus;
@@ -87,6 +84,8 @@ int main(int argc, char *argv[])
     pBackgroundColorUpdateTimer->setInterval(50);
     QObject::connect(pBackgroundColorUpdateTimer,SIGNAL(timeout()),pController,SLOT(ui_updateBackgroundColor()));
     pBackgroundColorUpdateTimer->start();
+
+
 
     QObject::connect(pctlPomoBegin,SIGNAL(clicked()),pController,SLOT(pomoBegin()));
     QObject::connect(pctlPomoCommit,SIGNAL(clicked()),pController,SLOT(pomoCommit()));
@@ -158,6 +157,11 @@ int main(int argc, char *argv[])
     a.setFont(font);
 
     pController->autoLoad();
+
+
+    pctlPomoLength->setMaximum(3600);
+    pctlPomoLength->setMinimum(1);
+    pctlPomoLength->setValue(5);
 
     w.show();
 

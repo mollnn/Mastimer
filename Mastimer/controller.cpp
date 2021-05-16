@@ -14,7 +14,9 @@ QColor BlendColor(const QColor &a, const QColor &b, double k)
 Controller::Controller(QObject *parent) : QObject(parent)
 {
     m_pomoFlag=false;
+    m_relaxFlag=false;
     m_todolistSelectIndex=-1;
+    connect(&timerRelax,SIGNAL(timeout()),this,SLOT(relaxEnd()));
 }
 
 
@@ -24,6 +26,8 @@ bool Controller::PomoBegin()
     {
         m_pomoFlag=1;
         m_pomoStartTime=QDateTime::currentDateTime();
+        timerRelax.stop();
+        this->m_relaxFlag=false;
         return true;
     }
     else
@@ -46,6 +50,9 @@ bool Controller::PomoCommit(int nId)
                 this->ui_pomoStatusRefresh();
                 this->ui_todolistRefresh();
                 this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + "," + QString().sprintf("%d",m_todolist[nId].used));
+                timerRelax.setInterval(minimalRelaxLength*1000);
+                this->m_relaxFlag=true;
+                timerRelax.start();
                 return true;
             }
             else {
@@ -226,6 +233,11 @@ void Controller::ui_updateBackgroundColor()
             newColor=colorFinish;
         }
     }
+    else if(m_relaxFlag==1)
+    {
+        newColor=colorRelax;
+
+    }
     QPalette oldPalette = m_pctlWindow->palette();
     oldPalette.setColor(QPalette::Background, BlendColor(m_pctlWindow->palette().background().color(),newColor,0.9));
     m_pctlWindow->setPalette(oldPalette);
@@ -369,4 +381,9 @@ void Controller::autoLoad()
     dataStream>>m_todolist;
     file2.close();
     ui_todolistRefresh();
+}
+
+void Controller::relaxEnd()
+{
+    this->m_relaxFlag=false;
 }

@@ -8,6 +8,7 @@
 #include <QListWidget>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QTimer>
 
 #include "todo.h"
 
@@ -30,17 +31,22 @@ public:
 
 private:
     QVector<Todo> m_todolist;
-    bool m_pomoFlag;
+    int m_pomoFlag;
+    int m_relaxFlag;
     QDateTime m_pomoStartTime;
 
 
     int m_todolistSelectIndex;
 
     int minimalPomoLength = 10;
+    int minimalRelaxLength = 5;
 
     const QColor colorReady=QColor("#f2e7e5");
     const QColor colorWorking=QColor("#f2cac9");
     const QColor colorFinish=QColor("#ed3b2f");
+    const QColor colorRelax=QColor("#96c24e");
+
+    QTimer timerRelax;
 
 public:
     bool PomoBegin();
@@ -78,6 +84,7 @@ public slots:
     void changePomoLength(int);
     void autoSave();
     void autoLoad();
+    void relaxEnd();
 };
 
 #endif // CONTROLLER_H
