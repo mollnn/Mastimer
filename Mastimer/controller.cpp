@@ -8,8 +8,6 @@
 #include <QGraphicsOpacityEffect>
 #include <QSystemTrayIcon>
 
-#include "traymenu.h"
-
 QColor BlendColor(const QColor &a, const QColor &b, double k)
 {
     return QColor(a.red() * k + b.red() * (1 - k), a.green() * k + b.green() * (1 - k), a.blue() * k + b.blue() * (1 - k));
@@ -26,19 +24,30 @@ Controller::Controller(QObject *parent) : QObject(parent)
 
 void Controller::InitSystemTray()
 {
-    QSystemTrayIcon *pSystemTray = new QSystemTrayIcon(this);
+    QSystemTrayIcon *pSystemTray = new QSystemTrayIcon(m_pctlWindow);
 
-    TrayMenu *pTrayMenu = new TrayMenu(m_pctlWindow);
+    trayIconMenu = new QMenu();
+
+    showAction = new QAction(m_pctlWindow);
+    quitAction = new QAction(m_pctlWindow);
+
+    showAction->setText(tr("显示"));
+    quitAction->setText(tr("退出"));
+
+    trayIconMenu->addAction(showAction);
+    trayIconMenu->addAction(quitAction);
+
+    connect(showAction, SIGNAL(triggered()), this, SLOT(showWindow()));
+    connect(quitAction, SIGNAL(triggered()), this, SLOT(quit()));
 
     // 设置系统托盘的上下文菜单
-    pSystemTray->setContextMenu(pTrayMenu);
+    pSystemTray->setContextMenu(trayIconMenu);
 
     // 设置系统托盘提示信息、托盘图标
     pSystemTray->setToolTip(("Mastimer"));
     pSystemTray->setIcon(QIcon("Mastimer.ico"));
 
     // 连接信号槽
-    connect(pTrayMenu, SIGNAL(showWindow()), this, SLOT(showWindow()));
     connect(pSystemTray , SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason)));
 
     // 显示系统托盘
@@ -52,16 +61,25 @@ void Controller::InitSystemTray()
 
 void Controller::showWindow()
 {
+    m_pctlWindow->hide();
     m_pctlWindow->show();
+}
+
+void Controller::showMenu()
+{
+    trayIconMenu->show();
 }
 
 void Controller::on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason reason)
 {
     switch (reason) {
-
+    case QSystemTrayIcon::Context:
+        showMenu();
+        break;
     case QSystemTrayIcon::Trigger:
         break;
     case QSystemTrayIcon::DoubleClick:
+        showWindow();
         break;
     default:
         break;
@@ -456,4 +474,10 @@ void Controller::autoLoad()
 void Controller::relaxEnd()
 {
     this->m_relaxFlag = false;
+    m_pSystemTray->showMessage("休息结束！","休息时间到，开始新番茄吧！",QIcon(),60000);
+}
+
+void Controller::quit()
+{
+    pApp->quit();
 }

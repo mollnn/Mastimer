@@ -70,6 +70,7 @@ int main(int argc, char *argv[])
     pController->m_pctlTodoUrgency = pctlTodoUrgency;
     pController->m_pctlWindow = &w;
     pController->m_pctlPomoLength = pctlPomoLength;
+    pController->pApp=&a;
 
     QTimer *pPomoStatusTimer = new QTimer;
     pPomoStatusTimer->setInterval(200);

@@ -28,8 +28,7 @@ SOURCES += \
         main.cpp \
         windowwidget.cpp \
     todo.cpp \
-    controller.cpp \
-    traymenu.cpp
+    controller.cpp
 
 HEADERS += \
         windowwidget.h \

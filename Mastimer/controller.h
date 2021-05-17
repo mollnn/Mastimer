@@ -10,10 +10,11 @@
 #include <QSpinBox>
 #include <QTimer>
 #include <QSystemTrayIcon>
+#include <QApplication>
+#include <QMenu>
+#include <QSystemTrayIcon>
 
 #include "todo.h"
-
-#include "traymenu.h"
 
 class Controller : public QObject
 {
@@ -32,6 +33,13 @@ public:
     QSpinBox *m_pctlPomoLength;
     QWidget *m_pctlWindow;
     QSystemTrayIcon *m_pSystemTray;
+
+    QMenu *trayIconMenu;
+
+    QAction *showAction;
+    QAction *quitAction;
+
+    QApplication *pApp;
 
 private:
     QVector<Todo> m_todolist;
@@ -69,6 +77,7 @@ signals:
 public slots:
     void InitSystemTray();
     void showWindow();
+    void showMenu();
     void on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason reason);
     void pomoBegin();
     void pomoCommit();
@@ -92,6 +101,7 @@ public slots:
     void autoSave();
     void autoLoad();
     void relaxEnd();
+    void quit();
 };
 
 #endif // CONTROLLER_H
