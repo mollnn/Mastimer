@@ -48,7 +48,7 @@ bool Controller::PomoCommit(int nId)
                 m_pomoFlag = 0;
                 this->ui_pomoStatusRefresh();
                 this->ui_todolistRefresh();
-                this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + "," + QString().sprintf("%d", m_todolist[nId].used));
+                this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + "," + QString().sprintf("%d", m_todolist[nId].used)+"\n");
                 timerRelax.setInterval(minimalRelaxLength * 1000);
                 this->m_relaxFlag = true;
                 timerRelax.start();
@@ -126,12 +126,17 @@ void Controller::AddTodo()
 {
     m_todolist.append(Todo());
     this->ui_todolistRefresh();
+    m_pctlTodolist->setCurrentRow(m_todolist.size()-1);
 }
 
 void Controller::DeleteTodo(int nId)
 {
     m_todolist.erase(m_todolist.begin() + nId);
     this->ui_todolistRefresh();
+    if(nId-1>=0 && nId-1<m_todolist.size())
+    {
+        m_pctlTodolist->setCurrentRow(nId-1);
+    }
 }
 
 void Controller::SaveTodolist()
