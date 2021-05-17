@@ -6,6 +6,9 @@
 #include <QFileDialog>
 #include <QTextStream>
 #include <QGraphicsOpacityEffect>
+#include <QSystemTrayIcon>
+
+#include "traymenu.h"
 
 QColor BlendColor(const QColor &a, const QColor &b, double k)
 {
@@ -15,9 +18,55 @@ QColor BlendColor(const QColor &a, const QColor &b, double k)
 Controller::Controller(QObject *parent) : QObject(parent)
 {
     m_pomoFlag = false;
+    m_pomoFinishFlag = false;
     m_relaxFlag = false;
     m_todolistSelectIndex = -1;
     connect(&timerRelax, SIGNAL(timeout()), this, SLOT(relaxEnd()));
+}
+
+void Controller::InitSystemTray()
+{
+    QSystemTrayIcon *pSystemTray = new QSystemTrayIcon(this);
+
+    TrayMenu *pTrayMenu = new TrayMenu(m_pctlWindow);
+
+    // 设置系统托盘的上下文菜单
+    pSystemTray->setContextMenu(pTrayMenu);
+
+    // 设置系统托盘提示信息、托盘图标
+    pSystemTray->setToolTip(("Mastimer"));
+    pSystemTray->setIcon(QIcon("Mastimer.ico"));
+
+    // 连接信号槽
+    connect(pTrayMenu, SIGNAL(showWindow()), this, SLOT(showWindow()));
+    connect(pSystemTray , SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason)));
+
+    // 显示系统托盘
+    pSystemTray->show();
+
+    // 显示系统托盘提示信息
+    pSystemTray->showMessage(("欢迎使用Mastimer"), ("开始新番茄吧！"));
+
+    m_pSystemTray=pSystemTray;
+}
+
+void Controller::showWindow()
+{
+    m_pctlWindow->show();
+}
+
+void Controller::on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason reason)
+{
+    switch (reason) {
+
+    case QSystemTrayIcon::Trigger:
+        break;
+    case QSystemTrayIcon::DoubleClick:
+        break;
+    default:
+        break;
+
+    }
 }
 
 bool Controller::PomoBegin()
@@ -25,6 +74,7 @@ bool Controller::PomoBegin()
     if (m_pomoFlag == 0)
     {
         m_pomoFlag = 1;
+        m_pomoFinishFlag=0;
         m_pomoStartTime = QDateTime::currentDateTime();
         timerRelax.stop();
         this->m_relaxFlag = false;
@@ -77,6 +127,7 @@ bool Controller::PomoDestroy()
     {
         // todo: ask the user
         m_pomoFlag = 0;
+        m_pomoFinishFlag=0;
         return true;
     }
     else
@@ -240,6 +291,13 @@ void Controller::ui_updateBackgroundColor()
         if (m_pomoStartTime.secsTo(QDateTime::currentDateTime()) >= minimalPomoLength)
         {
             newColor = colorFinish;
+            if(
+                    m_pomoFinishFlag==0)
+            {
+
+                m_pSystemTray->showMessage(("Mastimer"), ("番茄已完成！"));
+            }
+            m_pomoFinishFlag=1;
         }
     }
     else if (m_relaxFlag == 1)

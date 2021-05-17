@@ -28,12 +28,14 @@ SOURCES += \
         main.cpp \
         windowwidget.cpp \
     todo.cpp \
-    controller.cpp
+    controller.cpp \
+    traymenu.cpp
 
 HEADERS += \
         windowwidget.h \
     todo.h \
-    controller.h
+    controller.h \
+    traymenu.h
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

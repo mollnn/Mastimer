@@ -157,6 +157,8 @@ int main(int argc, char *argv[])
     pctlPomoLength->setMinimum(1);
     pctlPomoLength->setValue(500);
 
+    pController->InitSystemTray();
+
     w.show();
 
     return a.exec();

@@ -9,8 +9,11 @@
 #include <QLineEdit>
 #include <QSpinBox>
 #include <QTimer>
+#include <QSystemTrayIcon>
 
 #include "todo.h"
+
+#include "traymenu.h"
 
 class Controller : public QObject
 {
@@ -28,10 +31,12 @@ public:
     QSpinBox *m_pctlTodoFocus;
     QSpinBox *m_pctlPomoLength;
     QWidget *m_pctlWindow;
+    QSystemTrayIcon *m_pSystemTray;
 
 private:
     QVector<Todo> m_todolist;
     int m_pomoFlag;
+    int m_pomoFinishFlag;
     int m_relaxFlag;
     QDateTime m_pomoStartTime;
 
@@ -62,6 +67,9 @@ public:
 signals:
 
 public slots:
+    void InitSystemTray();
+    void showWindow();
+    void on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason reason);
     void pomoBegin();
     void pomoCommit();
     void pomoDestroy();
