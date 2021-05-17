@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
     WindowWidget w;
 
+    w.setWindowIcon(QIcon("Mastimer.ico"));
+
     QLabel *pctlPomoStatus = new QLabel;
     QPushButton *pctlPomoBegin = new QPushButton("开始番茄");
     QPushButton *pctlPomoCommit = new QPushButton("提交番茄");
