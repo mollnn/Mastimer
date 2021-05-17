@@ -5,6 +5,7 @@
 #include <QDataStream>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QGraphicsOpacityEffect>
 
 QColor BlendColor(const QColor &a, const QColor &b, double k)
 {
@@ -248,6 +249,7 @@ void Controller::ui_updateBackgroundColor()
     QPalette oldPalette = m_pctlWindow->palette();
     oldPalette.setColor(QPalette::Background, BlendColor(m_pctlWindow->palette().background().color(), newColor, 0.9));
     m_pctlWindow->setPalette(oldPalette);
+    m_pctlTodolist->setStyleSheet("background-color:rgba(255,255,255,0.5)");
 }
 
 void Controller::todoAdd()
