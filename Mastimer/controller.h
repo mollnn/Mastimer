@@ -59,6 +59,7 @@ private:
     const QColor colorRelax = QColor("#add5a2");
 
     QTimer timerRelax;
+    QTimer timerPomoFinish;
 
 public:
     bool PomoBegin();
@@ -102,6 +103,7 @@ public slots:
     void autoLoad();
     void relaxEnd();
     void quit();
+    void onTimerPomoFinish();
 };
 
 #endif // CONTROLLER_H

@@ -20,6 +20,7 @@ Controller::Controller(QObject *parent) : QObject(parent)
     m_relaxFlag = false;
     m_todolistSelectIndex = -1;
     connect(&timerRelax, SIGNAL(timeout()), this, SLOT(relaxEnd()));
+    connect(&timerPomoFinish, SIGNAL(timeout()), this,SLOT(onTimerPomoFinish()));
 }
 
 void Controller::InitSystemTray()
@@ -121,6 +122,7 @@ bool Controller::PomoCommit(int nId)
                 timerRelax.setInterval(minimalRelaxLength * 1000);
                 this->m_relaxFlag = true;
                 timerRelax.start();
+                timerPomoFinish.stop();
                 return true;
             }
             else
@@ -146,6 +148,7 @@ bool Controller::PomoDestroy()
         // todo: ask the user
         m_pomoFlag = 0;
         m_pomoFinishFlag=0;
+        timerPomoFinish.stop();
         return true;
     }
     else
@@ -309,11 +312,11 @@ void Controller::ui_updateBackgroundColor()
         if (m_pomoStartTime.secsTo(QDateTime::currentDateTime()) >= minimalPomoLength)
         {
             newColor = colorFinish;
-            if(
-                    m_pomoFinishFlag==0)
+            if(m_pomoFinishFlag==0)
             {
-
                 m_pSystemTray->showMessage(("Mastimer"), ("番茄已完成！"));
+                timerPomoFinish.setInterval(30000);
+                timerPomoFinish.start();
             }
             m_pomoFinishFlag=1;
         }
@@ -480,4 +483,9 @@ void Controller::relaxEnd()
 void Controller::quit()
 {
     pApp->quit();
+}
+
+void Controller::onTimerPomoFinish()
+{
+    m_pSystemTray->showMessage(("Mastimer"), ("番茄已完成！"));
 }
