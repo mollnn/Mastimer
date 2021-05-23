@@ -7,6 +7,7 @@
 #include <QTextStream>
 #include <QGraphicsOpacityEffect>
 #include <QSystemTrayIcon>
+#include <QtMath>
 
 QColor BlendColor(const QColor &a, const QColor &b, double k)
 {
@@ -46,7 +47,7 @@ void Controller::InitSystemTray()
 
     // 设置系统托盘提示信息、托盘图标
     pSystemTray->setToolTip(("Mastimer"));
-    pSystemTray->setIcon(QIcon("Mastimer.ico"));
+    pSystemTray->setIcon(QIcon(":/Mastimer.ico"));
 
     // 连接信号槽
     connect(pSystemTray , SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this, SLOT(on_activatedSysTrayIcon(QSystemTrayIcon::ActivationReason)));
@@ -118,7 +119,8 @@ bool Controller::PomoCommit(int nId)
                 m_pomoFlag = 0;
                 this->ui_pomoStatusRefresh();
                 this->ui_todolistRefresh();
-                this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + "," + QString().sprintf("%d", m_todolist[nId].used)+"\n");
+                this->WriteLog(QDateTime::currentDateTime().toString("yyyyMMdd,hh:mm:ss") + "," + m_todolist[nId].name + ","
+                               + QString().sprintf("%lld,%d",m_pomoStartTime.secsTo(QDateTime::currentDateTime()), m_todolist[nId].used)+"\n");
                 timerRelax.setInterval(minimalRelaxLength * 1000);
                 this->m_relaxFlag = true;
                 timerRelax.start();
@@ -243,7 +245,7 @@ void Controller::LoadTodolist()
 
 void Controller::WriteLog(const QString &strLog)
 {
-    QString filename = "log.csv";
+    QString filename = "log" + QDateTime::currentDateTime().toString("yyyyMMdd") + ".csv";
     QFile file(filename);
     if (file.open(QIODevice::ReadWrite | QIODevice::Append) == false)
     {
