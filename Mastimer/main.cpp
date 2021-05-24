@@ -27,6 +27,8 @@ int main(int argc, char *argv[])
 
     w.setWindowIcon(QIcon("Mastimer.ico"));
 
+    // Create UI controls
+
     QLabel *pctlPomoStatus = new QLabel;
     QPushButton *pctlPomoBegin = new QPushButton("开始番茄");
     QPushButton *pctlPomoCommit = new QPushButton("提交番茄");
@@ -59,7 +61,12 @@ int main(int argc, char *argv[])
     QLabel *pctlLabelPomoLength = new QLabel("番茄长度");
     QSpinBox *pctlPomoLength = new QSpinBox;
 
+    // Create functional controller
+
     Controller *pController = new Controller;
+
+    // Pass UI controls addresses to controller
+
     pController->m_pctlPomoStatus = pctlPomoStatus;
     pController->m_pctlTodolist = pctlTodolist;
     pController->m_pctlTodoName = pctlTodoName;
@@ -71,6 +78,8 @@ int main(int argc, char *argv[])
     pController->m_pctlWindow = &w;
     pController->m_pctlPomoLength = pctlPomoLength;
     pController->pApp=&a;
+
+    // Create timers
 
     QTimer *pPomoStatusTimer = new QTimer;
     pPomoStatusTimer->setInterval(200);
@@ -108,6 +117,8 @@ int main(int argc, char *argv[])
     QObject::connect(pctlTodoFocus, SIGNAL(valueChanged(int)), pController, SLOT(changeTodoFocus(int)));
 
     QObject::connect(pctlPomoLength, SIGNAL(valueChanged(int)), pController, SLOT(changePomoLength(int)));
+
+    // UI Layout
 
     QGridLayout *pGridLayout = new QGridLayout;
 
@@ -154,13 +165,19 @@ int main(int argc, char *argv[])
     font.setFamily("微软雅黑");
     a.setFont(font);
 
+    // Init
+
     pController->autoLoad();
 
     pctlPomoLength->setMaximum(3600);
     pctlPomoLength->setMinimum(1);
     pctlPomoLength->setValue(500);
 
+    // Create system tray
+
     pController->InitSystemTray();
+
+    // Begin
 
     w.show();
 
