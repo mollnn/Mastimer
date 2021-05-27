@@ -275,6 +275,20 @@ void Controller::pomoDestroy()
 void Controller::ui_pomoStatusRefresh()
 {
     m_pctlPomoStatus->setText(this->PomoStatus());
+    if(this->m_pomoFlag==1)
+    {
+        int ratio = m_pomoStartTime.secsTo(QDateTime::currentDateTime())*100 / minimalPomoLength;
+        if(ratio<=20) m_pSystemTray->setIcon(QIcon(":/progress00.png"));
+        else if(ratio<=40) m_pSystemTray->setIcon(QIcon(":/progress20.png"));
+        else if(ratio<=60) m_pSystemTray->setIcon(QIcon(":/progress40.png"));
+        else if(ratio<=80) m_pSystemTray->setIcon(QIcon(":/progress60.png"));
+        else if(ratio<=99) m_pSystemTray->setIcon(QIcon(":/progress80.png"));
+        else m_pSystemTray->setIcon(QIcon(":/progress99.png"));
+    }
+    else
+    {
+        m_pSystemTray->setIcon(QIcon(":/Mastimer.ico"));
+    }
 }
 
 void Controller::ui_todolistRefresh()

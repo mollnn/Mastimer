@@ -1,6 +1,11 @@
-<!DOCTYPE RCC>
 <RCC>
     <qresource prefix="/">
         <file>Mastimer.ico</file>
+        <file>progress00.png</file>
+        <file>progress20.png</file>
+        <file>progress40.png</file>
+        <file>progress60.png</file>
+        <file>progress80.png</file>
+        <file>progress99.png</file>
     </qresource>
 </RCC>
